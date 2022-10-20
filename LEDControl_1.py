@@ -2,6 +2,8 @@
 #Latest Edit: 6/10/2022
 #Edited by: Jason
 
+#Here is something
+
 #Get all the libraries: 
 import pandas as pd #Used to manipulate the lists
 import time
@@ -207,4 +209,4 @@ if __name__ == '__main__':
         if args.clear:
             colorWipe(strip, Color(0,0,0), 10)
 
-#Some small change
+

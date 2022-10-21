@@ -4,6 +4,7 @@
 
 #Working??
 #Zero check
+#Zero check again
 
 #Get all the libraries: 
 import pandas as pd #Used to manipulate the lists

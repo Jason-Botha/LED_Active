@@ -3,6 +3,7 @@
 #Edited by: Jason
 
 #Working??
+#Zero check
 
 #Get all the libraries: 
 import pandas as pd #Used to manipulate the lists

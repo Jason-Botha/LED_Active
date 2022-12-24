@@ -31,7 +31,7 @@ colNames_2 = ["Color_1","Color_2","Color_3"]
 colNames_3 = ["MappedLED", "ColourIndex", "ScenarioNum"]
 colNames_4 = ["CurrentAnimations"]
 colNames_5 = ["CurrentScenarios"]
-colNames_6 = ["InputParameters"]
+colNames_6 = ["Value"]
 
 button = Button(23, hold_time=2)
 buttonPush = False #Button is false at start

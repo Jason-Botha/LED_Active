@@ -31,6 +31,7 @@ colNames_2 = ["Color_1","Color_2","Color_3"]
 colNames_3 = ["MappedLED", "ColourIndex", "ScenarioNum"]
 colNames_4 = ["CurrentAnimations"]
 colNames_5 = ["CurrentScenarios"]
+colNames_6 = ["InputParameters"]
 
 button = Button(23, hold_time=2)
 buttonPush = False #Button is false at start
@@ -44,6 +45,8 @@ ScenarioControl = []
 CurrentCountryColourList = []
 df_1 = []
 df_3 = []
+timeBetweenLED_ON = 300
+timeBetweenLED_OFF = 300
 
 #Links to google Sheets
 pathto_AnimationList = r'https://docs.google.com/spreadsheets/d/1cvY7nFmQXcqeIgzIGluxPr4DZurvwUJ0DhEDwiHVGqs/export?format=csv&gid=2133138814'
@@ -51,6 +54,7 @@ pathto_ColourLookUp = r'https://docs.google.com/spreadsheets/d/1cvY7nFmQXcqeIgzI
 pathto_CountryColour = r'https://docs.google.com/spreadsheets/d/1cvY7nFmQXcqeIgzIGluxPr4DZurvwUJ0DhEDwiHVGqs/export?format=csv&gid=740621852'
 pathto_AnimationControl = r'https://docs.google.com/spreadsheets/d/1cvY7nFmQXcqeIgzIGluxPr4DZurvwUJ0DhEDwiHVGqs/export?format=csv&gid=1780015285'
 pathto_ScenarioControl = r'https://docs.google.com/spreadsheets/d/1cvY7nFmQXcqeIgzIGluxPr4DZurvwUJ0DhEDwiHVGqs/export?format=csv&gid=686401352'
+pathto_InputParameters = r'https://docs.google.com/spreadsheets/d/1cvY7nFmQXcqeIgzIGluxPr4DZurvwUJ0DhEDwiHVGqs/export?format=csv&gid=950944565'
 
 def getGoogleData():
     """This is used once in the begining and everytime the button is pushed"""
@@ -64,6 +68,8 @@ def getGoogleData():
     global ScenarioControl
     global df_1
     global df_3
+    global timeBetweenLED_ON
+    global timeBetweenLED_OFF
     
     #this is the LED animation sheet
     df_1 = pd.read_csv(pathto_AnimationList, encoding = 'utf8', usecols = colNames_1)
@@ -80,12 +86,15 @@ def getGoogleData():
     df_4 = pd.read_csv(pathto_AnimationControl, encoding = 'utf8', usecols = colNames_4)
     AnimationControl = df_4.values.tolist()
     print("animationControl -->")
-    print(AnimationControl)
+    #print(AnimationControl)
     #Get all the curent running Scenarios
     df_5 = pd.read_csv(pathto_ScenarioControl, encoding = 'utf8', usecols = colNames_5)
     ScenarioControl = df_5.values.tolist()
-    print("ScenarioControl -->")
-    print(ScenarioControl)
+    #print("ScenarioControl -->")
+    #print(ScenarioControl)
+    df_6 = pd.read_csv(pathto_InputParameters, encoding = 'utf8', usecols = colNames_6)
+    timeBetweenLED_ON = df_6.iloc[0]
+    timeBetweenLED_OFF = df_6.iloc[1]
     
 def RunAnimation_Scenario(strip):
     """For each animation run through all the differnt scenarions and repeat"""
@@ -115,7 +124,7 @@ def whichColour(colourIndex):
     return Color(x,y,z)
 
 
-def colorWipe(strip, color, wait_ms=500):
+def colorWipe(strip, color, wait_ms=timeBetweenLED_OFF):
     """Wipe color across all LEDs at one time."""
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, color)
@@ -123,7 +132,7 @@ def colorWipe(strip, color, wait_ms=500):
         time.sleep(wait_ms/1000.0)
 
 
-def LightLEDsInOrder(strip, LEDList, wait_ms=300):
+def LightLEDsInOrder(strip, LEDList, wait_ms=timeBetweenLED_ON):
     """This sets the LEDs to their colours as per their order"""
     #Clear map first
     colorWipe(strip, Color(0,0,0), 1)
@@ -135,7 +144,7 @@ def LightLEDsInOrder(strip, LEDList, wait_ms=300):
         print(LEDList[i][0])
 
 
-def LightLEDsInOrder_Off(strip, LEDList, wait_ms=300):
+def LightLEDsInOrder_Off(strip, LEDList, wait_ms=timeBetweenLED_OFF):
     """This sets the LEDs to their colours as per their order"""
    
     for i in range(len(LEDList)):

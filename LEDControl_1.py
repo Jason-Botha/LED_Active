@@ -85,7 +85,7 @@ def getGoogleData():
     #Get all the curent running Animations
     df_4 = pd.read_csv(pathto_AnimationControl, encoding = 'utf8', usecols = colNames_4)
     AnimationControl = df_4.values.tolist()
-    print("animationControl -->")
+    #print("animationControl -->")
     #print(AnimationControl)
     #Get all the curent running Scenarios
     df_5 = pd.read_csv(pathto_ScenarioControl, encoding = 'utf8', usecols = colNames_5)
@@ -124,7 +124,7 @@ def whichColour(colourIndex):
     return Color(x,y,z)
 
 
-def colorWipe(strip, color, wait_ms=timeBetweenLED_OFF):
+def colorWipe(strip, color, 20):
     """Wipe color across all LEDs at one time."""
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, color)
@@ -141,7 +141,7 @@ def LightLEDsInOrder(strip, LEDList, wait_ms=timeBetweenLED_ON):
         strip.setPixelColor(LEDList[i][0],int(whichColour(LEDList[i][3])))
         strip.show()
         time.sleep(wait_ms/1000.0)
-        print(LEDList[i][0])
+        #print(LEDList[i][0])
 
 
 def LightLEDsInOrder_Off(strip, LEDList, wait_ms=timeBetweenLED_OFF):

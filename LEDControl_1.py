@@ -92,9 +92,9 @@ def getGoogleData():
     ScenarioControl = df_5.values.tolist()
     #print("ScenarioControl -->")
     #print(ScenarioControl)
-    df_6 = pd.read_csv(pathto_InputParameters, encoding = 'utf8', usecols = colNames_6)
-    timeBetweenLED_ON = df_6.iloc[0]
-    timeBetweenLED_OFF = df_6.iloc[1]
+    #df_6 = pd.read_csv(pathto_InputParameters, encoding = 'utf8', usecols = colNames_6)
+    #timeBetweenLED_ON = df_6.iloc[0]
+    #timeBetweenLED_OFF = df_6.iloc[1]
     
 def RunAnimation_Scenario(strip):
     """For each animation run through all the differnt scenarions and repeat"""

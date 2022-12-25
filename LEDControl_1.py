@@ -132,7 +132,7 @@ def colorWipe(strip, color, 20):
         time.sleep(wait_ms/1000.0)
 
 
-def LightLEDsInOrder(strip, LEDList, wait_ms = timeBetweenLED_ON):
+def LightLEDsInOrder(strip, LEDList, wait_ms = 300):
     """This sets the LEDs to their colours as per their order"""
     #Clear map first
     colorWipe(strip, Color(0,0,0), 1)
@@ -144,7 +144,7 @@ def LightLEDsInOrder(strip, LEDList, wait_ms = timeBetweenLED_ON):
         #print(LEDList[i][0])
 
 
-def LightLEDsInOrder_Off(strip, LEDList, wait_ms = timeBetweenLED_OFF):
+def LightLEDsInOrder_Off(strip, LEDList, wait_ms = 300):
     """This sets the LEDs to their colours as per their order"""
    
     for i in range(len(LEDList)):

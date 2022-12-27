@@ -47,6 +47,7 @@ df_1 = []
 df_3 = []
 timeBetweenLED_ON = 300
 timeBetweenLED_OFF = 300
+strip = []
 
 #Links to google Sheets
 pathto_AnimationList = r'https://docs.google.com/spreadsheets/d/1cvY7nFmQXcqeIgzIGluxPr4DZurvwUJ0DhEDwiHVGqs/export?format=csv&gid=2133138814'
@@ -101,7 +102,6 @@ def RunAnimation_Scenario(strip,LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_IN
     global CurrentCountryColourList
     
     getGoogleData()
-    
     global strip
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     

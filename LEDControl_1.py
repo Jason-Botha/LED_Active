@@ -70,6 +70,7 @@ def getGoogleData():
     global df_3
     global timeBetweenLED_ON
     global timeBetweenLED_OFF
+    global LED_BRIGHTNESS
     
     #this is the LED animation sheet
     df_1 = pd.read_csv(pathto_AnimationList, encoding = 'utf8', usecols = colNames_1)
@@ -86,16 +87,14 @@ def getGoogleData():
     df_4 = pd.read_csv(pathto_AnimationControl, encoding = 'utf8', usecols = colNames_4)
     AnimationControl = df_4.values.tolist()
     #print("animationControl -->")
-    #print(AnimationControl)
     #Get all the curent running Scenarios
     df_5 = pd.read_csv(pathto_ScenarioControl, encoding = 'utf8', usecols = colNames_5)
     ScenarioControl = df_5.values.tolist()
     #print("ScenarioControl -->")
-    #print(ScenarioControl)
     df_6 = pd.read_csv(pathto_InputParameters, encoding = 'utf8', usecols = colNames_6)
     timeBetweenLED_ON = df_6.iloc[0]
-    print(timeBetweenLED_ON)
-    #timeBetweenLED_OFF = df_6.iloc[1]
+    timeBetweenLED_OFF = df_6.iloc[1]
+    LED_BRIGHTNESS = = df_6.iloc[2]
     
 def RunAnimation_Scenario(strip):
     """For each animation run through all the differnt scenarions and repeat"""

@@ -102,6 +102,8 @@ def RunAnimation_Scenario(strip):
     
     getGoogleData()
     
+    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+    
     for animationNum in AnimationControl:
         for scenario in ScenarioControl:
             #Data will be ["MappedLED", "Order", "AnimationID", "ColourIndex", "ScenarioNum"]

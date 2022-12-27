@@ -109,9 +109,9 @@ def RunAnimation_Scenario(strip):
             CurrentCountryColourList = df_merge.loc[(df_merge['AnimationID'] == animationNum) & (df_merge['ScenarioNum'] == scenario)].sort_values("Order").values.tolist()
             
             #Once we have the current list just go and switch them on
-            LightLEDsInOrder(strip,CurrentCountryColourList)
+            LightLEDsInOrder(strip,CurrentCountryColourList,timeBetweenLED_ON)
             #Wipe the map
-            LightLEDsInOrder_Off(strip,CurrentCountryColourList)
+            LightLEDsInOrder_Off(strip,CurrentCountryColourList,timeBetweenLED_OFF)
 
  
       

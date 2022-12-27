@@ -96,12 +96,13 @@ def getGoogleData():
     timeBetweenLED_OFF = df_6.iloc[1]
     LED_BRIGHTNESS = df_6.iloc[2]
     
-def RunAnimation_Scenario(strip):
+def RunAnimation_Scenario(strip,LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL):
     """For each animation run through all the differnt scenarions and repeat"""
     global CurrentCountryColourList
     
     getGoogleData()
     
+    global strip
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     
     for animationNum in AnimationControl:
@@ -215,7 +216,7 @@ if __name__ == '__main__':
             #LightLEDsInOrder(strip,100)
             #LightLEDsInOrder_Off(strip,100)
             #getGoogleData()
-            RunAnimation_Scenario(strip)
+            RunAnimation_Scenario(strip,LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
             time.sleep(10)
 
     except KeyboardInterrupt:

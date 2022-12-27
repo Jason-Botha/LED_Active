@@ -124,7 +124,7 @@ def whichColour(colourIndex):
     return Color(x,y,z)
 
 
-def colorWipe(strip, color, 20):
+def colorWipe(strip, color, wait_ms=20):
     """Wipe color across all LEDs at one time."""
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, color)

@@ -1,10 +1,8 @@
 #First code test run March 2021
-#Latest Edit: 6/10/2022
+#Latest Edit: 21/01/2023
 #Edited by: Jason
 
-#Working??
-#Zero check
-#Zero check again
+#General: Animation = order in which lights go on, Scenario = colour of lights
 
 #Get all the libraries: 
 import pandas as pd #Used to manipulate the lists
@@ -45,10 +43,11 @@ ScenarioControl = []
 CurrentCountryColourList = []
 df_1 = []
 df_3 = []
-timeBetweenLED_ON = 300
-timeBetweenLED_OFF = 300
+timeBetweenLED_ON = 1
+timeBetweenLED_OFF = 1
 
-#Links to google Sheets
+# Links to google Sheets
+# The 'r' means raw link and is critical to make this work
 pathto_AnimationList = r'https://docs.google.com/spreadsheets/d/1cvY7nFmQXcqeIgzIGluxPr4DZurvwUJ0DhEDwiHVGqs/export?format=csv&gid=2133138814'
 pathto_ColourLookUp = r'https://docs.google.com/spreadsheets/d/1cvY7nFmQXcqeIgzIGluxPr4DZurvwUJ0DhEDwiHVGqs/export?format=csv&gid=1306523954'
 pathto_CountryColour = r'https://docs.google.com/spreadsheets/d/1cvY7nFmQXcqeIgzIGluxPr4DZurvwUJ0DhEDwiHVGqs/export?format=csv&gid=740621852'
@@ -58,8 +57,8 @@ pathto_InputParameters = r'https://docs.google.com/spreadsheets/d/1cvY7nFmQXcqeI
 
 def getGoogleData():
     """This is used once in the begining and everytime the button is pushed"""
-    """The function just pulles the lits from the sheets"""
-    #Need to define global here otherwise it doesent pass through the function
+    """The function pulls the list from google sheets"""
+    # Need to define global here otherwise it doesent pass through the function
     global AnimationList    
     global colorArray
     global CountryColourList
@@ -74,7 +73,6 @@ def getGoogleData():
     
     #this is the LED animation sheet
     df_1 = pd.read_csv(pathto_AnimationList, encoding = 'utf8', usecols = colNames_1)
-    #AnimationList = df_1.sort_values("Order").values.tolist()
     #This gets LED colour lists
     df_2 = pd.read_csv(pathto_ColourLookUp, encoding = 'utf8', usecols = colNames_2)
     colorArray = df_2.values
@@ -86,7 +84,6 @@ def getGoogleData():
     #Get all the curent running Animations
     df_4 = pd.read_csv(pathto_AnimationControl, encoding = 'utf8', usecols = colNames_4)
     AnimationControl = df_4.values.tolist()
-    #print("animationControl -->")
     #Get all the curent running Scenarios
     df_5 = pd.read_csv(pathto_ScenarioControl, encoding = 'utf8', usecols = colNames_5)
     ScenarioControl = df_5.values.tolist()
@@ -108,13 +105,15 @@ def RunAnimation_Scenario(strip,LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_IN
             df_merge = pd.merge(df_1, df_3, on = 'MappedLED', how = 'left')
             CurrentCountryColourList = df_merge.loc[(df_merge['AnimationID'] == animationNum) & (df_merge['ScenarioNum'] == scenario)].sort_values("Order").values.tolist()
             
+            # If the random order should be chosen
+            if animationNum == 999:
+                CurrentCountryColourList = CurrentCountryColourList.sample(frac = 1)              
+       
             #Once we have the current list just go and switch them on
             LightLEDsInOrder(strip,CurrentCountryColourList,timeBetweenLED_ON)
             #Wipe the map
             LightLEDsInOrder_Off(strip,CurrentCountryColourList,timeBetweenLED_OFF)
-
- 
-      
+     
 def whichColour(colourIndex):
     """This just builds the Color needed for the LED"""
     #colorArray looks like (255,0,0)
@@ -123,7 +122,6 @@ def whichColour(colourIndex):
     z = colorArray[colourIndex][2]
     return Color(x,y,z)
 
-
 def colorWipe(strip, color, wait_ms=20):
     """Wipe color across all LEDs at one time."""
     for i in range(strip.numPixels()):
@@ -131,8 +129,7 @@ def colorWipe(strip, color, wait_ms=20):
         strip.show()
         time.sleep(wait_ms/1000.0)
 
-
-def LightLEDsInOrder(strip, LEDList, wait_ms = timeBetweenLED_ON):
+def LightLEDsInOrder(strip, LEDList, wait_ms = 20):
     """This sets the LEDs to their colours as per their order"""
     #Clear map first
     colorWipe(strip, Color(0,0,0), 1)
@@ -144,7 +141,7 @@ def LightLEDsInOrder(strip, LEDList, wait_ms = timeBetweenLED_ON):
         #print(LEDList[i][0])
 
 
-def LightLEDsInOrder_Off(strip, LEDList, wait_ms = timeBetweenLED_OFF):
+def LightLEDsInOrder_Off(strip, LEDList, wait_ms = 20):
     """This sets the LEDs to their colours as per their order"""
    
     for i in range(len(LEDList)):
@@ -155,7 +152,7 @@ def LightLEDsInOrder_Off(strip, LEDList, wait_ms = timeBetweenLED_OFF):
 
 
 
-
+#This code is not used, keeping it for button push logic
 def colorTest(strip, wait_ms=100):
     """Array index test"""
     global buttonPush
@@ -210,9 +207,6 @@ if __name__ == '__main__':
     try:
         while True:
             print('Starting LED animation script')
-            #LightLEDsInOrder(strip,100)
-            #LightLEDsInOrder_Off(strip,100)
-            #getGoogleData()
             RunAnimation_Scenario(strip,LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
             time.sleep(10)
 

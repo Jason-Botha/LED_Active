@@ -43,8 +43,8 @@ ScenarioControl = []
 CurrentCountryColourList = []
 df_1 = []
 df_3 = []
-timeBetweenLED_ON = 1
-timeBetweenLED_OFF = 1
+timeBetweenLED_ON = 1000
+timeBetweenLED_OFF = 50
 
 # Links to google Sheets
 # The 'r' means raw link and is critical to make this work
@@ -96,9 +96,7 @@ def getGoogleData():
 def RunAnimation_Scenario(strip,LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL):
     """For each animation run through all the differnt scenarions and repeat"""
     global CurrentCountryColourList
-    
-    getGoogleData()
-    
+       
     for animationNum in AnimationControl:
         for scenario in ScenarioControl:
             #Data will be ["MappedLED", "Order", "AnimationID", "ColourIndex", "ScenarioNum"]
@@ -194,6 +192,9 @@ if __name__ == '__main__':
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     # Intialize the library (must be called once before other functions).
     strip.begin()
+    # Set Svalbad to Green, means we are on
+    strip.setPixelColor(172,int(Color(0,255,0)))
+    strip.show()
     
     #Set the call back up to watch button
     button.when_held = setButtonPush
@@ -203,6 +204,12 @@ if __name__ == '__main__':
     print ('Press Ctrl-C to quit.')
     if not args.clear:
         print('Use "-c" argument to clear LEDs on exit')
+        
+    # Set Greenland to Yellow before looking for google data
+    strip.setPixelColor(315,int(Color(255,255,0)))
+    strip.show()
+    #Download data only once in the beginning, this will change later with addition of button
+    getGoogleData()
 
     try:
         while True:

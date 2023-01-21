@@ -19,7 +19,7 @@ LED_PIN        = 18      # GPIO pin connected to the pixels (18 uses PWM!).
 #LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
-LED_BRIGHTNESS = 50     # Set to 0 for darkest and 255 for brightest
+LED_BRIGHTNESS = 80     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
@@ -205,8 +205,8 @@ if __name__ == '__main__':
     if not args.clear:
         print('Use "-c" argument to clear LEDs on exit')
         
-    # Set Greenland to Yellow before looking for google data
-    strip.setPixelColor(315,int(Color(255,255,0)))
+    # Set Greenland to Red before looking for google data
+    strip.setPixelColor(315,int(Color(255,0,0)))
     strip.show()
     #Download data only once in the beginning, this will change later with addition of button
     getGoogleData()
